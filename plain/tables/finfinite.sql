@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6deb5
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Feb 08, 2019 at 08:50 PM
+-- Host: localhost
+-- Generation Time: Feb 10, 2019 at 03:38 AM
 -- Server version: 5.7.25-0ubuntu0.18.10.2
 -- PHP Version: 7.2.10-0ubuntu1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -31,7 +33,7 @@ CREATE TABLE `credit_cards` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `balance` float NOT NULL,
   `credit` int(13) NOT NULL,
-  `due_date` date NOT NULL,
+  `due_date` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
   `apr` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -54,6 +56,8 @@ ALTER TABLE `credit_cards`
 --
 ALTER TABLE `credit_cards`
   MODIFY `id` int(13) NOT NULL AUTO_INCREMENT;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

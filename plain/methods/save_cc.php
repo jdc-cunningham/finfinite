@@ -2,8 +2,10 @@
 
     require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR.'db.php');
     require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR.'validations.php');
+    require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR.'misc.php');
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
         $id = null;
         $name = is_empty($_POST['name'], 'name');
         $balance = is_empty($_POST['balance'], 'balance');
@@ -20,11 +22,10 @@
         $stmt->bindParam(':credit', $credit, PDO::PARAM_STR);
         $stmt->bindParam(':due_date', $due_date, PDO::PARAM_STR);
         $stmt->bindParam(':apr', $apr, PDO::PARAM_STR);
-        
+
         if ($stmt->execute()) {
             return_status(true, 'Credit card saved');
-        }
-        else {
+        } else {
             return_status(false, 'Failed to save credit card');
         }
     }
