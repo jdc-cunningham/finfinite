@@ -1,0 +1,26 @@
+.add-credit-card {
+    display: inline-flex;
+    flex-direction: column;
+    padding: 1em;
+    margin: 1em;
+    border-radius: 6px;
+    border: 1px solid #282828;
+}
+
+.add-credit-card__form-row:not(:first-of-type) {
+    margin-top: 1em;
+}
+
+.add-credit-card__form-row input {
+    border: 1px solid #aaa;
+}
+
+#save-credit-card {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 1em;
+    cursor: pointer;
+}

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 10, 2019 at 03:38 AM
+-- Generation Time: Feb 10, 2019 at 09:01 PM
 -- Server version: 5.7.25-0ubuntu0.18.10.2
 -- PHP Version: 7.2.10-0ubuntu1
 
@@ -33,7 +33,7 @@ CREATE TABLE `credit_cards` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `balance` float NOT NULL,
   `credit` int(13) NOT NULL,
-  `due_date` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `due_date` int(2) NOT NULL,
   `apr` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
