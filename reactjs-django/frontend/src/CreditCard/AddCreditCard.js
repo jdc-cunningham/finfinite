@@ -5,7 +5,7 @@ class AddCreditCard extends Component {
         super(props);
         this.state = {
             errFields: [],
-            fieldValues: {}
+            ['card-name']: ''
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -17,19 +17,28 @@ class AddCreditCard extends Component {
     }
 
     isEmpty(name, value) {
+        let curErrFields = this.state.errFields;
+
+        console.log(name);
+        console.log(value);
+
         if (value.length) {
-            let arrIndex = this.state.errFields.indexOf(name);
-            this.setState.errFields.splice(arrIndex, 1);
+            let arrIndex = curErrFields.indexOf(name);
+            curErrFields.splice(arrIndex, 1);
         }
         else {
-            this.setState.errFields.push(name);
+            curErrFields.push(name);
         }
+
+        this.setState({
+            errFields : curErrFields
+        });
     }
 
     validateField(name, value) {
         switch (name) {
             case 'card-name':
-                this.isEmpty(value);
+                this.isEmpty(name, value);
                 break;
             default :
                 break;
@@ -38,7 +47,7 @@ class AddCreditCard extends Component {
 
     handleChange(event) {
         this.setState({
-            [event.target.name]: event.target.value
+            [event.target.name] : event.target.value
         });
     }
 
@@ -57,24 +66,37 @@ class AddCreditCard extends Component {
 
         console.log(this.state.errFields);
 
+        this.setState(formValues); // re-render to fire validation
+
         // alert('Yo bitch: ' + this.state['card-name'].value);
         event.preventDefault();
     }
 
     render() {
+        console.log('render');
+        // console.log(this.state.errFields);
+        const hasError = (fieldName) => {
+            if (this.state.errFields.indexOf(fieldName) !== -1) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        };
+
         return (
             <form>
-                <div className="AddCreditCard-form-row">
+                <div className={'AddCreditCard-form-row' + (hasError('card-name') ? ' error' : '')}>
                     <label>
                         Card name
                         <input 
                             type="text"
                             name="card-name"
-                            value={this.state.value}
+                            // value={this.state["card-name"]}
                             onChange={this.handleChange} />
                     </label>
                 </div>
-                <div className="AddCreditCard-form-row">
+                {/* <div className="AddCreditCard-form-row">
                     <label>
                         Card balance
                         <input 
@@ -118,7 +140,7 @@ class AddCreditCard extends Component {
                             value={this.state.value}
                             onChange={this.handleChange} />
                     </label>
-                </div>
+                </div> */}
                 <button type="button" onClick={this.handleSubmit}>Add Card</button>
             </form>
         );
