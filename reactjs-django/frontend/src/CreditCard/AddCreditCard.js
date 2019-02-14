@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './AddCreditCard.css';
 
 class AddCreditCard extends Component {
     constructor(props) {
@@ -85,7 +86,7 @@ class AddCreditCard extends Component {
         };
 
         return (
-            <form>
+            <form name="add-credit-card">
                 <div className={'AddCreditCard-form-row' + (hasError('card-name') ? ' error' : '')}>
                     <label>
                         Card name
