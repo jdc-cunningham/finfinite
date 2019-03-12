@@ -10,6 +10,7 @@ class AddCreditCard extends Component {
 		};
 
 		this.handleChange = this.handleChange.bind(this);
+		this.handleFocus = this.handleFocus.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
@@ -19,9 +20,6 @@ class AddCreditCard extends Component {
 
 	isEmpty(name, value) {
 		let curErrFields = this.state.errFields;
-
-		console.log(name);
-		console.log(value);
 
 		if (value.length) {
 			let arrIndex = curErrFields.indexOf(name);
@@ -55,19 +53,20 @@ class AddCreditCard extends Component {
 	}
 
 	handleFocus(event) {
-		console.log(this);
-		console.log(event.target.name);
-		// let curFormState = this.state;
-		// let curErrFields = curFormState.errFields;
+		let curFormState = this.state;
+		console.log(curFormState);
+		let curErrFields = curFormState.errFields;
+		let arrIndex = curErrFields.indexOf(event.target.name);
 
-		// let arrIndex = curErrFields.indexOf(name);
 
 		// // if ( this.state.errFields.indexOf( event.name !== -1 ) {
-		// if ( currErrFields.length && arrIndex ) {
-		// 	this.setState({
-		// 		errFields: curErrFields.splice(arrIndex, 1)
-		// 	})
-		// }
+		if ( curErrFields.length && arrIndex > -1 ) {
+			this.setState({
+				errFields: curErrFields.splice(arrIndex, 1)
+			})
+		}
+
+		this.setState(curFormState); // re-render
 	}
 
 	handleSubmit(event) {
@@ -83,18 +82,17 @@ class AddCreditCard extends Component {
 			this.validateField(key, formValues[key])
 		))
 
-		console.log(this.state.errFields);
-
 		this.setState(formValues); // re-render to fire validation
+
+		console.log(this.state);
 
 		// alert('Yo bitch: ' + this.state['card-name'].value);
 		event.preventDefault();
 	}
 
 	render() {
-		console.log('render');
-		// console.log(this.state.errFields);
 		const hasError = (fieldName) => {
+			console.log(this.state);
 			if (this.state.errFields.indexOf(fieldName) !== -1) {
 				return true;
 			}
@@ -108,7 +106,7 @@ class AddCreditCard extends Component {
 				<div className={'form-row' + (hasError('card-name') ? ' error' : '')}>
 					<label>
 						Card name
-												<input
+						<input
 							type="text"
 							name="card-name"
 							// value={this.state["card-name"]}
