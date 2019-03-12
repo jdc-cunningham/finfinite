@@ -11,6 +11,24 @@ form {
     margin: 10px
 }
 
-#form form[name="add-credit-card"] button {
+.form-row {
+    padding: 0.5em 0;
+}
+
+.form-row.error input {
+    border-color: red;
+}
+
+.form-row.center {
+    width: 100%;
+    text-align: center;
+}
+
+form input {
+    margin-left: 0.5em;
+}
+
+form form-row button {
     margin-top: 1em;
 }
+
