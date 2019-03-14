@@ -6,12 +6,88 @@ class AddCreditCard extends Component {
 		super(props);
 		this.state = {
 			errFields: [],
-			'card-name': '',
-			'card-balance': '',
-			'card-credit-limit': '',
-			'card-due-date': '',
-			'card-apr': '',
-			'card-annual-fee': '',
+			formFields: {
+				'card-name': {
+				labelText: 'Card Name',
+				attrs: {
+					'type': 'text',
+					'value': ''
+				},
+				events: {
+					onFocus: this.handleFocus,
+					onChange: this.handleChange
+				},
+				style: '{}'
+				},
+				'card-balance': {
+					labelText: 'Card Balance',
+					attrs: {
+						'type': 'number',
+						'value': '',
+						'step': '0.01'
+					},
+					events: {
+						onFocus: this.handleFocus,
+						onChange: this.handleChange
+					},
+					style: '{}'
+				},
+				'card-credit-limit': {
+					labelText: 'Card Credit Limit',
+					attrs: {
+						'type': 'number',
+						'value': '',
+						'step': '0.01'
+					},
+					events: {
+						onFocus: this.handleFocus,
+						onChange: this.handleChange
+					},
+					style: '{}'
+				},
+				'card-due-date': {
+					labelText: 'Card Due Date',
+					attrs: {
+						'type': 'number',
+						'value': 0,
+						'step': '1',
+						'placeholder': 'day of month',
+						'maxLength': 2,
+						'max': 31,
+					},
+					events: {
+						onFocus: this.handleFocus,
+						onChange: this.handleChange
+					},
+					style: '{}'
+				},
+				'card-apr': {
+					labelText: 'Card APR',
+					attrs: {
+						'type': 'number',
+						'value': '',
+						'step': '0.01'
+					},
+					events: {
+						onFocus: this.handleFocus,
+						onChange: this.handleChange
+					},
+					style: '{}'
+				},
+				'card-annual-fee': {
+					labelText: 'Card Annual Fee',
+					attrs: {
+						'type': 'number',
+						'value': '',
+						'step': '0.01'
+					},
+					events: {
+						onFocus: this.handleFocus,
+						onChange: this.handleChange
+					},
+					style: '{}'
+				}
+			}
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -125,6 +201,8 @@ class AddCreditCard extends Component {
 	}
 
 	render() {
+		const curState = this.state;
+
 		const hasError = (fieldName) => {
 			console.log(this.state);
 			if (this.state.errFields.indexOf(fieldName) !== -1) {
@@ -135,85 +213,42 @@ class AddCreditCard extends Component {
 			}
 		};
 
+		// this was bad data design wasn't aware had to use map for output
+		const formFieldsArr = [];
+
+		Object.keys(curState.formFields).forEach(function (cardInput) {
+			formFieldsArr.push([cardInput, curState.formFields[cardInput]]);
+		});
+
+		const ifSet = (style) => {
+			// this is just filler, wasn't aware non-empty requirement
+			return style === '{}' ? { backgroundColor: 'white' } : style;
+		}
+
+		const formFields = formFieldsArr.map(function (cardInput, key) {
+			var formField = cardInput[1];
+
+			return <div key={ key } className={'form-row' + (hasError(cardInput) ? ' error' : '')}>
+				<label>
+					{ formField.labelText }
+					<input
+						type={ formField.attrs.type }
+						name={ cardInput[0] }
+						step={ formField.attrs.step }
+						maxLength={ formField.attrs.maxLength }
+						placeholder={ formField.attrs.placeholder }
+						max={ formField.attrs.max }
+						value={ formField.attrs.value }
+						onFocus={ formField.events.onFocus }
+						onChange={ formField.events.onChange }
+						style={ ifSet(formField.style) } />
+				</label>
+			</div>;
+		});
+
 		return (
 			<form name="add-credit-card">
-				<div className={'form-row' + (hasError('card-name') ? ' error' : '')}>
-					<label>
-						Card name
-						<input
-							type="text"
-							name="card-name"
-							// value={this.state["card-name"]}
-							onFocus={this.handleFocus}
-							onChange={this.handleChange}
-							style={{
-								/* property: value */
-								/* can put styles */
-							}} />
-					</label>
-				</div>
-				<div className={'form-row' + (hasError('card-balance') ? ' error' : '')}>
-					<label>
-						Card balance
-						<input 
-								type="number" 
-								name="card-balance"
-								step="0.01" 
-								value={this.state.value}
-								onFocus={this.handleFocus}
-								onChange={this.handleChange} />
-					</label>
-				</div>
-				<div className={'form-row' + (hasError('card-credit-limit') ? ' error' : '')}>
-					<label>
-						Card credit limit
-						<input 
-								type="number" 
-								name="card-credit-limit"
-								step="0.01"
-								value={this.state.value}
-								onFocus={this.handleFocus}
-								onChange={this.handleChange} />
-					</label>
-				</div>
-				<div className={'form-row' + (hasError('card-due-date') ? ' error' : '')}>
-					<label>
-						Card due date
-						<input
-								type="number"
-								name="card-due-date"
-								placeholder="day of month"
-								maxLength={2}
-								max={31}
-								value={this.state.value}
-								onFocus={this.handleFocus}
-								onChange={this.handleChange} />
-					</label>
-				</div>
-				<div className={'form-row' + (hasError('card-apr') ? ' error' : '')}>
-					<label>
-						Card APR
-						<input 
-								type="number" 
-								name="card-apr"
-								step="0.01"
-								value={this.state.value}
-								onFocus={this.handleFocus}
-								onChange={this.handleChange} />
-					</label>
-				</div>
-				<div className={'form-row' + (hasError('card-annual-fee') ? ' error' : '')}>
-					<label>
-						Card Annual Fee
-						<input 
-								type="number" 
-								name="card-annual-fee"
-								step="0.01"
-								value={this.state.value}
-								onFocus={this.handleFocus}
-								onChange={this.handleChange} />
-					</label>
-				</div>
+				{ formFields }
 				<div className="form-row center">
 					<button type="button" onClick={this.handleSubmit}>Add Card</button>
 				</div>
