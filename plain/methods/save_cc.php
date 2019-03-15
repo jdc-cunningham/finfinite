@@ -14,7 +14,7 @@
         $credit = is_empty($_POST['card-credit-limit'], 'credit');
         $due_date = is_empty($_POST['card-due-date'], 'due date');
         $apr = is_empty($_POST['card-apr'], 'apr');
-        $annual_fee = is_empty($_POST['annual-fee'], 'annual_fee');
+        $annual_fee = is_empty($_POST['card-annual-fee'], 'annual_fee');
 
         $stmt = $dbh->prepare('INSERT INTO credit_cards VALUES
                     (:id, :name, :balance, :credit, :due_date, :apr, :annual_fee)
