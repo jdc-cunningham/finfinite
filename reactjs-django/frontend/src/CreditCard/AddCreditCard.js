@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import './AddCreditCard.css';
 
 class AddCreditCard extends Component {
@@ -166,6 +167,28 @@ class AddCreditCard extends Component {
 			this.validateField(key, formValues.formFields[key]['attrs']['value'])
 		))
 		this.setState(formValues); // re-render to fire validation
+
+		if ( !this.state.errFields.length ) {
+			const postUrl = '/methods/save_cc.php',
+						formFields = this.state.formFields,
+						data = new FormData();
+
+			data.append('card-name', formFields['card-name']['attrs']['value']);
+			data.append('card-balance', formFields['card-balance']['attrs']['value']);
+			data.append('card-credit-limit', formFields['card-credit-limit']['attrs']['value']);
+			data.append('card-due-date', formFields['card-due-date']['attrs']['value']);
+			data.append('card-apr', formFields['card-apr']['attrs']['value']);
+			data.append('card-annual-fee', formFields['card-annual-fee']['attrs']['value']);
+
+			axios.post(	postUrl, data )
+			.then( function( response ) {
+				console.log(response);
+			})
+			.catch( function ( error ) {
+				console.log(error);
+			});
+		}
+
 		event.preventDefault();
 	}
 
