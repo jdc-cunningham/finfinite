@@ -4,6 +4,11 @@ import './AddCreditCard.css';
 class AddCreditCard extends Component {
 	constructor(props) {
 		super(props);
+
+		this.handleChange = this.handleChange.bind(this);
+		this.handleFocus = this.handleFocus.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+
 		this.state = {
 			errFields: [],
 			formFields: {
@@ -46,7 +51,7 @@ class AddCreditCard extends Component {
 					style: '{}'
 				},
 				'card-due-date': {
-					labelText: 'Card Due Date',
+					labelText: 'Card Due Date (day of month)',
 					attrs: {
 						'type': 'number',
 						'value': 0,
@@ -89,14 +94,9 @@ class AddCreditCard extends Component {
 				}
 			}
 		};
-
-		this.handleChange = this.handleChange.bind(this);
-		this.handleFocus = this.handleFocus.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	throwError() {
-
 	}
 
 	isEmpty(name, value) {
@@ -143,68 +143,35 @@ class AddCreditCard extends Component {
 	}
 
 	handleChange(event) {
+		let curState = this.state.formFields;
+		curState[event.target.name]['attrs']['value'] = event.target.value
 		this.setState({
-			[event.target.name]: event.target.value
+			formFields: curState
 		});
 	}
 
 	handleFocus(event) {
-		console.log('focus');
 		let curErrFields = this.state.errFields;
 		let arrIndex = curErrFields.indexOf(event.target.name);
 
-		// // if ( this.state.errFields.indexOf( event.name !== -1 ) {
 		if ( curErrFields.length && arrIndex > -1 ) {
 			curErrFields.splice(arrIndex, 1);
-
 			this.setState({ curErrFields });
-			// curErrFields.splice(arrIndex, 1);
 		}
-
-		console.log(curErrFields);
-
-		// this.setState(curFormState); // re-render
-
-		// const formValues = this.state;
-		// // const validateFcn = this.validateField;
-
-		// // can't access super, this refers to object
-
-		// Object.keys(this.state).map((key) => (
-		// 	this.validateField(key, formValues[key])
-		// ))
-
-		// this.setState(formValues); // re-render to fire validation
-
-		// console.log(this.state);
 	}
 
 	handleSubmit(event) {
 		const formValues = this.state;
-		console.log(formValues);
-		// const validateFcn = this.validateField;
-
-		// can't access super, this refers to object
-		// Object.keys(this.state).map(function (key) {
-		//     validateFcn.validateField(key, formValues[key]);
-		// });
-
-		Object.keys(this.state).map((key) => (
-			this.validateField(key, formValues[key])
+		Object.keys(formValues.formFields).map((key) => (
+			this.validateField(key, formValues.formFields[key]['attrs']['value'])
 		))
-
 		this.setState(formValues); // re-render to fire validation
-
-		console.log(this.state);
-		
 		event.preventDefault();
 	}
 
 	render() {
 		const curState = this.state;
-
 		const hasError = (fieldName) => {
-			console.log(this.state);
 			if (this.state.errFields.indexOf(fieldName) !== -1) {
 				return true;
 			}
@@ -228,7 +195,7 @@ class AddCreditCard extends Component {
 		const formFields = formFieldsArr.map(function (cardInput, key) {
 			var formField = cardInput[1];
 
-			return <div key={ key } className={'form-row' + (hasError(cardInput) ? ' error' : '')}>
+			return <div key={ key } className={'form-row' + (hasError(cardInput[0]) ? ' error' : '')}>
 				<label>
 					{ formField.labelText }
 					<input
