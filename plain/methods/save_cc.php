@@ -17,9 +17,9 @@
         $annual_fee = is_empty($_POST['annual-fee'], 'annual_fee');
 
         $stmt = $dbh->prepare('INSERT INTO credit_cards VALUES
-                    (:id, :name, :balance, :credit, :due_date, :apr)
+                    (:id, :name, :balance, :credit, :due_date, :apr, :annual_fee)
                 ');
-                
+
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':balance', $balance, PDO::PARAM_STR);
