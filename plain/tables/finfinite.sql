@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 10, 2019 at 09:01 PM
+-- Generation Time: Mar 14, 2019 at 09:28 PM
 -- Server version: 5.7.25-0ubuntu0.18.10.2
--- PHP Version: 7.2.10-0ubuntu1
+-- PHP Version: 7.2.15-0ubuntu0.18.10.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -34,7 +34,8 @@ CREATE TABLE `credit_cards` (
   `balance` float NOT NULL,
   `credit` int(13) NOT NULL,
   `due_date` int(2) NOT NULL,
-  `apr` float NOT NULL
+  `apr` float NOT NULL,
+  `annual_fee` varchar(11) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --

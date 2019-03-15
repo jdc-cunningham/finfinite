@@ -26,6 +26,8 @@
     //     }
     // }
 
+    /* this is just a simple empty validation, I'm not doing any type checking
+     * just for the sake of a simple, working back-end */
     function is_empty($value, $name) {
         if (!$value) {
             return_status(false, $name . ' is empty');
